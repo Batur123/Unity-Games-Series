@@ -14,15 +14,17 @@ public class Player1Controller : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKey(KeyCode.W))
+        if (Input.GetKeyDown(KeyCode.W))
         {
             Vector2 move = new Vector2(0f, +Speed);
             Rigid.velocity = move;
         }
-        if (Input.GetKey(KeyCode.S))
+        if (Input.GetKeyDown(KeyCode.S))
         {
             Vector2 move = new Vector2(0f, -Speed);
             Rigid.velocity = move;
-        }  
+        }
+
+        
     }
 }

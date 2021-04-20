@@ -8,13 +8,9 @@ public class PlayerBorderTrigger : MonoBehaviour
 {
     Rigidbody2D Ball;
     public GameObject BallGB;
-
     public Text P1Score;
     public Text P2Score;
-
     public static int Player1Score = 0, Player2Score = 0;
-    //  public GameObject P1TextUI;
-    //  public GameObject P2TextUI;
 
     decimal GetRandom()
     {
@@ -23,6 +19,18 @@ public class PlayerBorderTrigger : MonoBehaviour
         rndNumber = rndNumber * 15 - 3;
 
         return rndNumber;
+    }
+
+    void AddForceBall(float XCord, float YCord)
+    {
+        var rndNumber = GetRandom();
+
+        Vector2 v2 = Ball.velocity;
+        v2.y = XCord;
+        v2.x = YCord;
+        Ball.velocity = v2;
+
+        Ball.AddForce(new Vector2(Convert.ToSingle(rndNumber), Convert.ToSingle(5f)));
     }
 
     void Start()
@@ -39,29 +47,15 @@ public class PlayerBorderTrigger : MonoBehaviour
         Ball.transform.position = pos;
         var rndNumber = GetRandom();
 
-        
+
         Vector2 v2 = Ball.velocity;
         v2.y = 2f;
-        v2.x = Convert.ToSingle(rndNumber*2);
+        v2.x = Convert.ToSingle(rndNumber * 3);
         Ball.velocity = v2;
-    }
-
-
-    void AddForceBall(float XCord,float YCord)
-    {
-        var rndNumber = GetRandom();
-
-        Vector2 v2 = Ball.velocity;
-        v2.y = XCord;
-        v2.x = YCord;
-        Ball.velocity = v2;
-
-        Ball.AddForce(new Vector2(Convert.ToSingle(rndNumber), Convert.ToSingle(5f)));
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-
         var rndNumber = GetRandom();
 
         if (collision.collider.tag == "Player2Trigger")
@@ -70,30 +64,16 @@ public class PlayerBorderTrigger : MonoBehaviour
         }
         if (collision.collider.tag == "Player1Trigger")
         {
-            AddForceBall(5f, 11f);   
+            AddForceBall(5f, 11f);
         }
-        
+
     }
-
-    //void Arttir(int Score,Text ScoreText)
-    //{
-    //    Instantiate(BallGB);
-    //    Destroy(BallGB);
-    //    Score++;
-
-    //    int Temp = Convert.ToInt32(ScoreText.text);
-    //    Temp++;
-    //    ScoreText.text = Temp.ToString();
-
-    //}
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-       
+
         if (collision.tag == "Border1")
         {
-           // Arttir(Player2Score,P2Score);
-
             Instantiate(BallGB);
             Destroy(BallGB);
             Player2Score++;
@@ -101,27 +81,16 @@ public class PlayerBorderTrigger : MonoBehaviour
             int Temp = Convert.ToInt32(P2Score.text);
             Temp++;
             P2Score.text = Temp.ToString();
-
-
         }
         else if (collision.tag == "Border2")
         {
-          //  Arttir(Player1Score, P2Score);
-
             Instantiate(BallGB);
-            Destroy(BallGB);  
+            Destroy(BallGB);
             Player1Score++;
 
             int Temp = Convert.ToInt32(P1Score.text);
             Temp++;
             P1Score.text = Temp.ToString();
-
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-       
     }
 }
